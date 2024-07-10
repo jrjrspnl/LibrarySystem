@@ -11,7 +11,7 @@ using namespace LibrarySystem;
 [STAThreadAttribute]
 int main() {
 
-	Application::Run(gcnew LandingPage());
+	Application::Run(gcnew StudentBorrow());
 
 	return 0;
 }

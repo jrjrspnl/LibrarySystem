@@ -1,4 +1,5 @@
 #pragma once
+#include "BooksData.h"
 
 namespace LibrarySystem {
 
@@ -19,6 +20,7 @@ namespace LibrarySystem {
 		StudentView(void)
 		{
 			InitializeComponent();
+			displayAllAvailableBooks();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -30,6 +32,15 @@ namespace LibrarySystem {
 			//
 			//TODO: Add the constructor code here
 			//
+		}
+
+		void displayAllAvailableBooks() {
+
+
+			BooksData^ bData = gcnew BooksData();
+
+			List<BooksData^>^ listData = bData->AllAvailableBooks();
+			Table_AvailBooks->DataSource = listData;
 		}
 
 	protected:
@@ -48,7 +59,8 @@ namespace LibrarySystem {
 	private: System::Windows::Forms::Panel^ panel2;
 	private: System::Windows::Forms::Button^ button6;
 	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::DataGridView^ Table_AvailBooks;
+
 	private: System::Windows::Forms::Button^ button5;
 	private: System::Windows::Forms::Label^ label1;
 
@@ -71,12 +83,12 @@ namespace LibrarySystem {
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->Table_AvailBooks = (gcnew System::Windows::Forms::DataGridView());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panel2->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Table_AvailBooks))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// pictureBox1
@@ -137,19 +149,19 @@ namespace LibrarySystem {
 			this->label7->TabIndex = 9;
 			this->label7->Text = L"Library Management System";
 			// 
-			// dataGridView1
+			// Table_AvailBooks
 			// 
-			this->dataGridView1->AllowUserToAddRows = false;
-			this->dataGridView1->AllowUserToDeleteRows = false;
-			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(31, 137);
-			this->dataGridView1->Margin = System::Windows::Forms::Padding(2);
-			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->ReadOnly = true;
-			this->dataGridView1->RowHeadersWidth = 51;
-			this->dataGridView1->RowTemplate->Height = 24;
-			this->dataGridView1->Size = System::Drawing::Size(606, 244);
-			this->dataGridView1->TabIndex = 6;
+			this->Table_AvailBooks->AllowUserToAddRows = false;
+			this->Table_AvailBooks->AllowUserToDeleteRows = false;
+			this->Table_AvailBooks->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->Table_AvailBooks->Location = System::Drawing::Point(31, 137);
+			this->Table_AvailBooks->Margin = System::Windows::Forms::Padding(2);
+			this->Table_AvailBooks->Name = L"Table_AvailBooks";
+			this->Table_AvailBooks->ReadOnly = true;
+			this->Table_AvailBooks->RowHeadersWidth = 51;
+			this->Table_AvailBooks->RowTemplate->Height = 24;
+			this->Table_AvailBooks->Size = System::Drawing::Size(606, 244);
+			this->Table_AvailBooks->TabIndex = 6;
 			// 
 			// button5
 			// 
@@ -193,7 +205,7 @@ namespace LibrarySystem {
 			this->ClientSize = System::Drawing::Size(670, 397);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button5);
-			this->Controls->Add(this->dataGridView1);
+			this->Controls->Add(this->Table_AvailBooks);
 			this->Controls->Add(this->panel2);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Margin = System::Windows::Forms::Padding(2);
@@ -204,7 +216,7 @@ namespace LibrarySystem {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->panel2->ResumeLayout(false);
 			this->panel2->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Table_AvailBooks))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -215,6 +227,7 @@ namespace LibrarySystem {
 		view->Show();
 	}
 private: System::Void StudentView_Load(System::Object^ sender, System::EventArgs^ e) {
+	displayAllAvailableBooks();
 }
 };
 }

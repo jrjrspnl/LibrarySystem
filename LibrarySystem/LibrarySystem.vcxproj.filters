@@ -36,9 +36,6 @@
     <ClCompile Include="AdminView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StudentBorrow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StudentReturn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -49,6 +46,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BooksData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StudentBorrow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,9 +74,6 @@
     <ClInclude Include="AdminView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StudentBorrow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StudentReturn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BooksData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StudentBorrow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

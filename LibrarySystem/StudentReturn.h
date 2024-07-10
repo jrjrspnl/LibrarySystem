@@ -37,7 +37,7 @@ namespace LibrarySystem {
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	protected:
 	private: System::Windows::Forms::Panel^ panel2;
-	private: System::Windows::Forms::Button^ button6;
+
 	private: System::Windows::Forms::Label^ label7;
 	private: System::Windows::Forms::Button^ btnEnter;
 	private: System::Windows::Forms::TextBox^ textBox1;
@@ -64,7 +64,6 @@ namespace LibrarySystem {
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(StudentReturn::typeid));
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
-			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->btnEnter = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
@@ -80,9 +79,10 @@ namespace LibrarySystem {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(0, -4);
+			this->pictureBox1->Location = System::Drawing::Point(0, -3);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(201, 87);
+			this->pictureBox1->Size = System::Drawing::Size(151, 71);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox1->TabIndex = 3;
 			this->pictureBox1->TabStop = false;
@@ -90,33 +90,14 @@ namespace LibrarySystem {
 			// panel2
 			// 
 			this->panel2->BackColor = System::Drawing::Color::NavajoWhite;
-			this->panel2->Controls->Add(this->button6);
 			this->panel2->Controls->Add(this->label7);
 			this->panel2->Controls->Add(this->pictureBox1);
 			this->panel2->Dock = System::Windows::Forms::DockStyle::Top;
 			this->panel2->Location = System::Drawing::Point(0, 0);
+			this->panel2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(894, 82);
+			this->panel2->Size = System::Drawing::Size(670, 67);
 			this->panel2->TabIndex = 7;
-			// 
-			// button6
-			// 
-			this->button6->BackColor = System::Drawing::Color::NavajoWhite;
-			this->button6->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->button6->FlatAppearance->BorderSize = 0;
-			this->button6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button6->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button6->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->button6->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button6.Image")));
-			this->button6->ImageAlign = System::Drawing::ContentAlignment::MiddleRight;
-			this->button6->Location = System::Drawing::Point(841, 0);
-			this->button6->Name = L"button6";
-			this->button6->Padding = System::Windows::Forms::Padding(15, 0, 10, 0);
-			this->button6->Size = System::Drawing::Size(58, 42);
-			this->button6->TabIndex = 12;
-			this->button6->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			this->button6->UseVisualStyleBackColor = false;
 			// 
 			// label7
 			// 
@@ -125,9 +106,10 @@ namespace LibrarySystem {
 			this->label7->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label7->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->label7->Location = System::Drawing::Point(279, 24);
+			this->label7->Location = System::Drawing::Point(209, 20);
+			this->label7->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(477, 38);
+			this->label7->Size = System::Drawing::Size(390, 32);
 			this->label7->TabIndex = 9;
 			this->label7->Text = L"Library Management System";
 			// 
@@ -137,9 +119,10 @@ namespace LibrarySystem {
 			this->btnEnter->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnEnter->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->btnEnter->Location = System::Drawing::Point(95, 366);
+			this->btnEnter->Location = System::Drawing::Point(71, 297);
+			this->btnEnter->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->btnEnter->Name = L"btnEnter";
-			this->btnEnter->Size = System::Drawing::Size(106, 47);
+			this->btnEnter->Size = System::Drawing::Size(80, 38);
 			this->btnEnter->TabIndex = 28;
 			this->btnEnter->Text = L"Return";
 			this->btnEnter->UseVisualStyleBackColor = false;
@@ -148,9 +131,10 @@ namespace LibrarySystem {
 			// 
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->textBox1->Location = System::Drawing::Point(51, 197);
+			this->textBox1->Location = System::Drawing::Point(38, 160);
+			this->textBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(206, 30);
+			this->textBox1->Size = System::Drawing::Size(156, 26);
 			this->textBox1->TabIndex = 27;
 			// 
 			// label3
@@ -160,19 +144,21 @@ namespace LibrarySystem {
 			this->label3->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label3->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->label3->Location = System::Drawing::Point(47, 162);
+			this->label3->Location = System::Drawing::Point(35, 132);
+			this->label3->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(154, 23);
+			this->label3->Size = System::Drawing::Size(127, 18);
 			this->label3->TabIndex = 26;
 			this->label3->Text = L"Enter Book ID: ";
 			// 
 			// textBox2
 			// 
 			this->textBox2->BackColor = System::Drawing::Color::Linen;
-			this->textBox2->Location = System::Drawing::Point(332, 128);
+			this->textBox2->Location = System::Drawing::Point(249, 104);
+			this->textBox2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(527, 297);
+			this->textBox2->Size = System::Drawing::Size(396, 242);
 			this->textBox2->TabIndex = 29;
 			// 
 			// button1
@@ -186,19 +172,21 @@ namespace LibrarySystem {
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::Color::SaddleBrown;
 			this->button1->ImageAlign = System::Drawing::ContentAlignment::MiddleRight;
-			this->button1->Location = System::Drawing::Point(11, 96);
+			this->button1->Location = System::Drawing::Point(8, 78);
+			this->button1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->button1->Name = L"button1";
-			this->button1->Padding = System::Windows::Forms::Padding(15, 0, 10, 0);
-			this->button1->Size = System::Drawing::Size(55, 45);
+			this->button1->Padding = System::Windows::Forms::Padding(11, 0, 8, 0);
+			this->button1->Size = System::Drawing::Size(41, 37);
 			this->button1->TabIndex = 56;
 			this->button1->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button1->UseVisualStyleBackColor = false;
 			// 
 			// dateTimePicker1
 			// 
-			this->dateTimePicker1->Location = System::Drawing::Point(51, 284);
+			this->dateTimePicker1->Location = System::Drawing::Point(38, 231);
+			this->dateTimePicker1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
-			this->dateTimePicker1->Size = System::Drawing::Size(200, 22);
+			this->dateTimePicker1->Size = System::Drawing::Size(151, 20);
 			this->dateTimePicker1->TabIndex = 58;
 			// 
 			// label1
@@ -208,18 +196,19 @@ namespace LibrarySystem {
 			this->label1->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->label1->Location = System::Drawing::Point(47, 251);
+			this->label1->Location = System::Drawing::Point(35, 204);
+			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(158, 23);
+			this->label1->Size = System::Drawing::Size(130, 18);
 			this->label1->TabIndex = 59;
 			this->label1->Text = L"Returned Date:";
 			// 
 			// StudentReturn
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Bisque;
-			this->ClientSize = System::Drawing::Size(894, 489);
+			this->ClientSize = System::Drawing::Size(670, 397);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->dateTimePicker1);
 			this->Controls->Add(this->button1);
@@ -229,6 +218,7 @@ namespace LibrarySystem {
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->panel2);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"StudentReturn";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"StudentReturn";
