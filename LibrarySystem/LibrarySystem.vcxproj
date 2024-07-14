@@ -129,11 +129,16 @@
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="AdminAdd.cpp" />
     <ClCompile Include="AdminDB.cpp" />
+    <ClCompile Include="AdminGenre.cpp" />
     <ClCompile Include="AdminView.cpp" />
     <ClCompile Include="BooksData.cpp" />
+    <ClCompile Include="BooksReturned.cpp" />
+    <ClCompile Include="BorrowedBooks.cpp" />
+    <ClCompile Include="Genre.cpp" />
     <ClCompile Include="LandingPage.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="Register.cpp" />
+    <ClCompile Include="RegisteredStudents.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="StudentBorrow.cpp" />
     <ClCompile Include="StudentReturn.cpp" />
@@ -153,6 +158,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="BooksData.h" />
+    <ClInclude Include="BooksReturned.h" />
+    <ClInclude Include="BorrowedBooks.h" />
+    <ClInclude Include="Genre.h" />
     <ClInclude Include="LandingPage.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -162,6 +170,7 @@
     <ClInclude Include="Register.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="RegisteredStudents.h" />
     <ClInclude Include="Student.h">
       <FileType>CppForm</FileType>
     </ClInclude>

@@ -9,6 +9,7 @@ namespace LibrarySystem {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
 
 	/// <summary>
 	/// Summary for StudentBorrow
@@ -16,12 +17,19 @@ namespace LibrarySystem {
 	public ref class StudentBorrow : public System::Windows::Forms::Form
 	{
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\jimwiel\\Documents\\library.mdf;Integrated Security=True;Connect Timeout=30");
-	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::PictureBox^ pictureBox2;
-	public:
+	private: System::Windows::Forms::TextBox^ Txt_Search;
 
+
+
+
+
+	public:
 		Form^ borrow;
+	private: System::Windows::Forms::PictureBox^ Pb_Exit;
+	private: System::Windows::Forms::Button^ Btn_Search;
+
+	public:
+		String^ studentNumber;
 		StudentBorrow(void)
 		{
 			InitializeComponent();
@@ -31,8 +39,10 @@ namespace LibrarySystem {
 			//TODO: Add the constructor code here
 			//
 		}
-		StudentBorrow(Form^ borrow1) {
+		StudentBorrow(Form^ borrow1, String^ studentNumber) {
+
 			InitializeComponent();
+			this->studentNumber = studentNumber;
 			borrow = borrow1;
 
 		}
@@ -109,7 +119,8 @@ namespace LibrarySystem {
 	private: System::Windows::Forms::Label^ label7;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Label^ label8;
-	private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
+	private: System::Windows::Forms::NumericUpDown^ Numeric_num;
+
 	private: System::Windows::Forms::Label^ Lbl_Year;
 	private: System::Windows::Forms::Label^ Lbl_BookAuthor;
 	private: System::Windows::Forms::Label^ Lbl_BookTitle;
@@ -126,6 +137,7 @@ namespace LibrarySystem {
 	private: System::Windows::Forms::DataGridView^ Table_Availbooks;
 
 	private:
+		   
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -140,10 +152,11 @@ namespace LibrarySystem {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(StudentBorrow::typeid));
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->Pb_Exit = (gcnew System::Windows::Forms::PictureBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->label8 = (gcnew System::Windows::Forms::Label());
-			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->Numeric_num = (gcnew System::Windows::Forms::NumericUpDown());
 			this->Lbl_Year = (gcnew System::Windows::Forms::Label());
 			this->Lbl_BookAuthor = (gcnew System::Windows::Forms::Label());
 			this->Lbl_BookTitle = (gcnew System::Windows::Forms::Label());
@@ -157,19 +170,19 @@ namespace LibrarySystem {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->Btn_Borrow = (gcnew System::Windows::Forms::Button());
 			this->Table_Availbooks = (gcnew System::Windows::Forms::DataGridView());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->Txt_Search = (gcnew System::Windows::Forms::TextBox());
+			this->Btn_Search = (gcnew System::Windows::Forms::Button());
 			this->panel2->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Pb_Exit))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Numeric_num))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Table_Availbooks))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel2
 			// 
 			this->panel2->BackColor = System::Drawing::Color::NavajoWhite;
+			this->panel2->Controls->Add(this->Pb_Exit);
 			this->panel2->Controls->Add(this->label7);
 			this->panel2->Controls->Add(this->pictureBox1);
 			this->panel2->Dock = System::Windows::Forms::DockStyle::Top;
@@ -178,6 +191,18 @@ namespace LibrarySystem {
 			this->panel2->Name = L"panel2";
 			this->panel2->Size = System::Drawing::Size(670, 67);
 			this->panel2->TabIndex = 63;
+			// 
+			// Pb_Exit
+			// 
+			this->Pb_Exit->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Pb_Exit.BackgroundImage")));
+			this->Pb_Exit->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->Pb_Exit->Location = System::Drawing::Point(633, 5);
+			this->Pb_Exit->Margin = System::Windows::Forms::Padding(2);
+			this->Pb_Exit->Name = L"Pb_Exit";
+			this->Pb_Exit->Size = System::Drawing::Size(31, 29);
+			this->Pb_Exit->TabIndex = 96;
+			this->Pb_Exit->TabStop = false;
+			this->Pb_Exit->Click += gcnew System::EventHandler(this, &StudentBorrow::Pb_Exit_Click);
 			// 
 			// label7
 			// 
@@ -217,49 +242,46 @@ namespace LibrarySystem {
 			this->label8->TabIndex = 90;
 			this->label8->Text = L"Quantity:";
 			// 
-			// numericUpDown1
+			// Numeric_num
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(94, 211);
-			this->numericUpDown1->Margin = System::Windows::Forms::Padding(2);
-			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(155, 20);
-			this->numericUpDown1->TabIndex = 89;
+			this->Numeric_num->Location = System::Drawing::Point(96, 211);
+			this->Numeric_num->Margin = System::Windows::Forms::Padding(2);
+			this->Numeric_num->Name = L"Numeric_num";
+			this->Numeric_num->Size = System::Drawing::Size(154, 20);
+			this->Numeric_num->TabIndex = 89;
 			// 
 			// Lbl_Year
 			// 
 			this->Lbl_Year->AutoSize = true;
 			this->Lbl_Year->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Lbl_Year->Location = System::Drawing::Point(145, 306);
+			this->Lbl_Year->Location = System::Drawing::Point(151, 307);
 			this->Lbl_Year->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->Lbl_Year->Name = L"Lbl_Year";
-			this->Lbl_Year->Size = System::Drawing::Size(101, 14);
+			this->Lbl_Year->Size = System::Drawing::Size(0, 14);
 			this->Lbl_Year->TabIndex = 88;
-			this->Lbl_Year->Text = L"Publication Year";
 			// 
 			// Lbl_BookAuthor
 			// 
 			this->Lbl_BookAuthor->AutoSize = true;
 			this->Lbl_BookAuthor->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Lbl_BookAuthor->Location = System::Drawing::Point(118, 277);
+			this->Lbl_BookAuthor->Location = System::Drawing::Point(121, 278);
 			this->Lbl_BookAuthor->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->Lbl_BookAuthor->Name = L"Lbl_BookAuthor";
-			this->Lbl_BookAuthor->Size = System::Drawing::Size(79, 14);
+			this->Lbl_BookAuthor->Size = System::Drawing::Size(0, 14);
 			this->Lbl_BookAuthor->TabIndex = 87;
-			this->Lbl_BookAuthor->Text = L"Book Author";
 			// 
 			// Lbl_BookTitle
 			// 
 			this->Lbl_BookTitle->AutoSize = true;
 			this->Lbl_BookTitle->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Lbl_BookTitle->Location = System::Drawing::Point(104, 246);
+			this->Lbl_BookTitle->Location = System::Drawing::Point(108, 246);
 			this->Lbl_BookTitle->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->Lbl_BookTitle->Name = L"Lbl_BookTitle";
-			this->Lbl_BookTitle->Size = System::Drawing::Size(65, 14);
+			this->Lbl_BookTitle->Size = System::Drawing::Size(0, 14);
 			this->Lbl_BookTitle->TabIndex = 86;
-			this->Lbl_BookTitle->Text = L"Book Title";
 			// 
 			// pb_back
 			// 
@@ -379,51 +401,53 @@ namespace LibrarySystem {
 			this->Btn_Borrow->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->Btn_Borrow->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->Btn_Borrow->Location = System::Drawing::Point(114, 340);
+			this->Btn_Borrow->Location = System::Drawing::Point(92, 343);
 			this->Btn_Borrow->Margin = System::Windows::Forms::Padding(2);
 			this->Btn_Borrow->Name = L"Btn_Borrow";
 			this->Btn_Borrow->Size = System::Drawing::Size(106, 38);
 			this->Btn_Borrow->TabIndex = 77;
 			this->Btn_Borrow->Text = L"Borrow";
 			this->Btn_Borrow->UseVisualStyleBackColor = false;
+			this->Btn_Borrow->Click += gcnew System::EventHandler(this, &StudentBorrow::Btn_Borrow_Click);
 			// 
 			// Table_Availbooks
 			// 
 			this->Table_Availbooks->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->Table_Availbooks->Location = System::Drawing::Point(294, 140);
 			this->Table_Availbooks->Name = L"Table_Availbooks";
-			this->Table_Availbooks->Size = System::Drawing::Size(351, 229);
+			this->Table_Availbooks->RowHeadersVisible = false;
+			this->Table_Availbooks->Size = System::Drawing::Size(351, 241);
 			this->Table_Availbooks->TabIndex = 91;
 			// 
-			// label6
+			// Txt_Search
 			// 
-			this->label6->AutoSize = true;
-			this->label6->Font = (gcnew System::Drawing::Font(L"Arial", 10.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->Txt_Search->Location = System::Drawing::Point(294, 98);
+			this->Txt_Search->Name = L"Txt_Search";
+			this->Txt_Search->Size = System::Drawing::Size(243, 20);
+			this->Txt_Search->TabIndex = 93;
+			this->Txt_Search->TextChanged += gcnew System::EventHandler(this, &StudentBorrow::Txt_Search_TextChanged);
+			// 
+			// Btn_Search
+			// 
+			this->Btn_Search->BackColor = System::Drawing::Color::SandyBrown;
+			this->Btn_Search->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->Btn_Search->FlatAppearance->BorderSize = 0;
+			this->Btn_Search->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->Btn_Search->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label6->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->label6->Location = System::Drawing::Point(291, 104);
-			this->label6->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(62, 18);
-			this->label6->TabIndex = 92;
-			this->label6->Text = L"Search:";
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(358, 102);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(211, 20);
-			this->textBox1->TabIndex = 93;
-			// 
-			// pictureBox2
-			// 
-			this->pictureBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.BackgroundImage")));
-			this->pictureBox2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->pictureBox2->Location = System::Drawing::Point(575, 102);
-			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(20, 20);
-			this->pictureBox2->TabIndex = 94;
-			this->pictureBox2->TabStop = false;
+			this->Btn_Search->ForeColor = System::Drawing::Color::SaddleBrown;
+			this->Btn_Search->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Btn_Search.Image")));
+			this->Btn_Search->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->Btn_Search->Location = System::Drawing::Point(542, 96);
+			this->Btn_Search->Margin = System::Windows::Forms::Padding(2);
+			this->Btn_Search->Name = L"Btn_Search";
+			this->Btn_Search->Padding = System::Windows::Forms::Padding(11, 0, 8, 0);
+			this->Btn_Search->Size = System::Drawing::Size(103, 24);
+			this->Btn_Search->TabIndex = 96;
+			this->Btn_Search->Text = L" Search";
+			this->Btn_Search->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			this->Btn_Search->UseVisualStyleBackColor = false;
+			this->Btn_Search->Click += gcnew System::EventHandler(this, &StudentBorrow::Btn_Search_Click);
 			// 
 			// StudentBorrow
 			// 
@@ -431,12 +455,10 @@ namespace LibrarySystem {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Bisque;
 			this->ClientSize = System::Drawing::Size(670, 397);
-			this->Controls->Add(this->pictureBox2);
-			this->Controls->Add(this->textBox1);
-			this->Controls->Add(this->label6);
+			this->Controls->Add(this->Txt_Search);
 			this->Controls->Add(this->Table_Availbooks);
 			this->Controls->Add(this->label8);
-			this->Controls->Add(this->numericUpDown1);
+			this->Controls->Add(this->Numeric_num);
 			this->Controls->Add(this->Lbl_Year);
 			this->Controls->Add(this->Lbl_BookAuthor);
 			this->Controls->Add(this->Lbl_BookTitle);
@@ -450,6 +472,7 @@ namespace LibrarySystem {
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->Btn_Borrow);
 			this->Controls->Add(this->panel2);
+			this->Controls->Add(this->Btn_Search);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"StudentBorrow";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
@@ -457,15 +480,16 @@ namespace LibrarySystem {
 			this->Load += gcnew System::EventHandler(this, &StudentBorrow::StudentBorrow_Load);
 			this->panel2->ResumeLayout(false);
 			this->panel2->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Pb_Exit))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Numeric_num))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Table_Availbooks))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+
 	private: System::Void pb_back_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Hide();
 		borrow->Show();
@@ -545,6 +569,153 @@ private: System::Void Cbox_BookID_SelectedIndexChanged(System::Object^ sender, S
 private: System::Void StudentBorrow_Load(System::Object^ sender, System::EventArgs^ e) {
 	AllGenresData();
 	displayAllAvailableBooks();
+}
+
+public: void clearFields() {
+	Cbox_BookID->SelectedItem = -1;
+	Cbox_Genre->SelectedIndex = -1;
+	Lbl_BookTitle->Text = "";
+	Lbl_BookAuthor->Text = "";
+	Lbl_Year->Text = "";
+
+
+}
+private: System::Void Btn_Borrow_Click(System::Object^ sender, System::EventArgs^ e) {
+	System::String^ bookID = Cbox_BookID->Text;
+	int quantityToBorrow = safe_cast<int>(Numeric_num->Value); // Get the value from NumericUpDown
+
+	// Check if a book is selected
+	if (String::IsNullOrEmpty(bookID)) {
+		MessageBox::Show("Please select a book before borrowing.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	// Check if the quantity to borrow is valid (NumericUpDown will always provide a valid integer)
+	if (quantityToBorrow <= 0) {
+		MessageBox::Show("Please enter a valid quantity to borrow.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	if (checkConnection()) {
+		try {
+			connection->Open();
+
+			// Check the total number of books already borrowed by the student
+			System::String^ checkTotalBorrowedQuery = "SELECT ISNULL(SUM(quantity), 0) FROM BorrowedBooks WHERE student_number = @student_number AND returned_date IS NULL";
+			SqlCommand^ cmdCheckTotalBorrowed = gcnew SqlCommand(checkTotalBorrowedQuery, connection);
+			cmdCheckTotalBorrowed->Parameters->AddWithValue("@student_number", studentNumber);
+			int totalBorrowed = Convert::ToInt32(cmdCheckTotalBorrowed->ExecuteScalar());
+
+			// Validate total borrowed books
+			if (totalBorrowed + quantityToBorrow > 2) {
+				MessageBox::Show("You can only borrow up to 2 books in total.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Check the quantity of the specific book already borrowed by the student
+			System::String^ checkSpecificBookBorrowedQuery = "SELECT ISNULL(SUM(quantity), 0) FROM BorrowedBooks WHERE student_number = @student_number AND book_id = @book_id AND returned_date IS NULL";
+			SqlCommand^ cmdCheckSpecificBookBorrowed = gcnew SqlCommand(checkSpecificBookBorrowedQuery, connection);
+			cmdCheckSpecificBookBorrowed->Parameters->AddWithValue("@student_number", studentNumber);
+			cmdCheckSpecificBookBorrowed->Parameters->AddWithValue("@book_id", bookID);
+			int specificBookBorrowed = Convert::ToInt32(cmdCheckSpecificBookBorrowed->ExecuteScalar());
+
+			// Validate specific book quantity to borrow
+			if (specificBookBorrowed + quantityToBorrow > 2) {
+				MessageBox::Show("You can only borrow up to 2 copies of the same book.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Check current quantity of the book
+			System::String^ checkQuantityQuery = "SELECT quantity FROM books WHERE book_id = @book_id AND status = 'Available'";
+			SqlCommand^ cmdCheckQuantity = gcnew SqlCommand(checkQuantityQuery, connection);
+			cmdCheckQuantity->Parameters->AddWithValue("@book_id", bookID);
+			int currentQuantity = Convert::ToInt32(cmdCheckQuantity->ExecuteScalar());
+
+			// Validate quantity to borrow
+			if (quantityToBorrow > currentQuantity) {
+				MessageBox::Show("Quantity to borrow exceeds available stock.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Update books table
+			System::String^ updateBooks = "UPDATE books SET quantity = quantity - @quantity WHERE book_id = @book_id";
+			SqlCommand^ cmdUpdateBooks = gcnew SqlCommand(updateBooks, connection);
+			cmdUpdateBooks->Parameters->AddWithValue("@quantity", quantityToBorrow);
+			cmdUpdateBooks->Parameters->AddWithValue("@book_id", bookID);
+			cmdUpdateBooks->ExecuteNonQuery();
+
+			// Check current quantity of the book after update
+			int updatedQuantity = currentQuantity - quantityToBorrow;
+
+			// Check if the updated quantity is 0 (last available book)
+			if (updatedQuantity == 0) {
+				// Update book status to 'Not Available'
+				System::String^ updateStatusQuery = "UPDATE books SET status = 'Not Available' WHERE book_id = @book_id";
+				SqlCommand^ cmdUpdateStatus = gcnew SqlCommand(updateStatusQuery, connection);
+				cmdUpdateStatus->Parameters->AddWithValue("@book_id", bookID);
+				cmdUpdateStatus->ExecuteNonQuery();
+			}
+
+			// Insert into BorrowedBooks table
+			System::String^ insertBorrowed = "INSERT INTO BorrowedBooks (book_id, student_number, borrowed_date, quantity) VALUES (@book_id, @student_number, GETDATE(), @quantity)";
+			SqlCommand^ cmdInsertBorrowed = gcnew SqlCommand(insertBorrowed, connection);
+			cmdInsertBorrowed->Parameters->AddWithValue("@book_id", bookID);
+			cmdInsertBorrowed->Parameters->AddWithValue("@student_number", studentNumber);
+			cmdInsertBorrowed->Parameters->AddWithValue("@quantity", quantityToBorrow);
+			cmdInsertBorrowed->ExecuteNonQuery();
+
+			MessageBox::Show("Book borrowed successfully", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			displayAllAvailableBooks();
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Connection Failed: " + ex->Message, "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		finally {
+			connection->Close();
+		}
+	}
+}
+private: System::Void Pb_Exit_Click(System::Object^ sender, System::EventArgs^ e) {
+	Application::Exit();
+}
+private: System::Void Btn_Search_Click(System::Object^ sender, System::EventArgs^ e) {
+	System::String^ keyword = Txt_Search->Text->Trim();
+
+	if (keyword == "") {
+		// If the search text is empty, display all available books
+		displayAllAvailableBooks();
+		return;
+	}
+
+	// SQL query to search for books by title or author, and check availability
+	System::String^ searchQuery = "SELECT * FROM books WHERE (book_id LIKE '%' + @keyword + '%' OR genre LIKE '%' + @keyword + '%' OR book_title LIKE '%' + @keyword + '%' OR book_author LIKE '%' + @keyword + '%') AND status = 'Available'";
+
+	if (checkConnection()) {
+		try {
+			connection->Open();
+
+			SqlCommand^ cmdSearch = gcnew SqlCommand(searchQuery, connection);
+			cmdSearch->Parameters->AddWithValue("@keyword", keyword);
+
+			// Use SqlDataAdapter to fill results into a DataTable or DataGridView
+			SqlDataAdapter^ adapter = gcnew SqlDataAdapter(cmdSearch);
+			DataTable^ dataTable = gcnew DataTable();
+			adapter->Fill(dataTable);
+
+			// Display search results in your UI component (e.g., DataGridView)
+			// Example assuming you have a DataGridView named DataGridView1
+			Table_Availbooks->DataSource = dataTable;
+
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Search failed: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		finally {
+			connection->Close();
+		}
+	}
+}
+private: System::Void Txt_Search_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

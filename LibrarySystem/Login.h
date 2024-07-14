@@ -20,6 +20,7 @@ namespace LibrarySystem {
 	{
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\jimwiel\\Documents\\library.mdf;Integrated Security=True;Connect Timeout=30");
 	public:
+		String^ studentNumber;
 		Login(void)
 		{
 			InitializeComponent();
@@ -68,9 +69,11 @@ namespace LibrarySystem {
 	private: System::Windows::Forms::Button^ btnContinue;
 
 
-	private: System::Windows::Forms::LinkLabel^ linkLabel1;
+
 	private: System::Windows::Forms::LinkLabel^ linkReg;
 	private: System::Windows::Forms::PictureBox^ Pb_Exit;
+	private: System::Windows::Forms::CheckBox^ Cbox_ShowPass;
+
 
 
 
@@ -109,9 +112,9 @@ namespace LibrarySystem {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->btnContinue = (gcnew System::Windows::Forms::Button());
-			this->linkLabel1 = (gcnew System::Windows::Forms::LinkLabel());
 			this->linkReg = (gcnew System::Windows::Forms::LinkLabel());
 			this->Pb_Exit = (gcnew System::Windows::Forms::PictureBox());
+			this->Cbox_ShowPass = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Pb_Exit))->BeginInit();
@@ -149,7 +152,7 @@ namespace LibrarySystem {
 			this->label1->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 28.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->label1->Location = System::Drawing::Point(462, 61);
+			this->label1->Location = System::Drawing::Point(457, 48);
 			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(122, 44);
@@ -163,7 +166,7 @@ namespace LibrarySystem {
 				static_cast<System::Byte>(0)));
 			this->Cbox_Module->FormattingEnabled = true;
 			this->Cbox_Module->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"student", L"admin" });
-			this->Cbox_Module->Location = System::Drawing::Point(393, 176);
+			this->Cbox_Module->Location = System::Drawing::Point(396, 162);
 			this->Cbox_Module->Margin = System::Windows::Forms::Padding(2);
 			this->Cbox_Module->Name = L"Cbox_Module";
 			this->Cbox_Module->Size = System::Drawing::Size(242, 26);
@@ -177,12 +180,12 @@ namespace LibrarySystem {
 			this->label2->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label2->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->label2->Location = System::Drawing::Point(393, 154);
+			this->label2->Location = System::Drawing::Point(396, 140);
 			this->label2->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(65, 18);
+			this->label2->Size = System::Drawing::Size(70, 18);
 			this->label2->TabIndex = 3;
-			this->label2->Text = L"Module";
+			this->label2->Text = L"Module:";
 			// 
 			// label3
 			// 
@@ -191,7 +194,7 @@ namespace LibrarySystem {
 			this->label3->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label3->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->label3->Location = System::Drawing::Point(391, 206);
+			this->label3->Location = System::Drawing::Point(394, 197);
 			this->label3->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(97, 18);
@@ -202,7 +205,7 @@ namespace LibrarySystem {
 			// 
 			this->Txt_Username->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Txt_Username->Location = System::Drawing::Point(393, 230);
+			this->Txt_Username->Location = System::Drawing::Point(396, 221);
 			this->Txt_Username->Margin = System::Windows::Forms::Padding(2);
 			this->Txt_Username->Name = L"Txt_Username";
 			this->Txt_Username->Size = System::Drawing::Size(242, 26);
@@ -212,12 +215,12 @@ namespace LibrarySystem {
 			// 
 			this->Txt_Password->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Txt_Password->Location = System::Drawing::Point(393, 282);
+			this->Txt_Password->Location = System::Drawing::Point(396, 279);
 			this->Txt_Password->Margin = System::Windows::Forms::Padding(2);
 			this->Txt_Password->Name = L"Txt_Password";
-			this->Txt_Password->PasswordChar = '*';
 			this->Txt_Password->Size = System::Drawing::Size(242, 26);
 			this->Txt_Password->TabIndex = 7;
+			this->Txt_Password->UseSystemPasswordChar = true;
 			// 
 			// label4
 			// 
@@ -226,7 +229,7 @@ namespace LibrarySystem {
 			this->label4->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label4->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->label4->Location = System::Drawing::Point(391, 261);
+			this->label4->Location = System::Drawing::Point(394, 258);
 			this->label4->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(92, 18);
@@ -251,7 +254,7 @@ namespace LibrarySystem {
 			this->btnContinue->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnContinue->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->btnContinue->Location = System::Drawing::Point(468, 329);
+			this->btnContinue->Location = System::Drawing::Point(469, 325);
 			this->btnContinue->Margin = System::Windows::Forms::Padding(2);
 			this->btnContinue->Name = L"btnContinue";
 			this->btnContinue->Size = System::Drawing::Size(95, 42);
@@ -259,14 +262,6 @@ namespace LibrarySystem {
 			this->btnContinue->Text = L"Login";
 			this->btnContinue->UseVisualStyleBackColor = false;
 			this->btnContinue->Click += gcnew System::EventHandler(this, &Login::btnContinue_Click);
-			// 
-			// linkLabel1
-			// 
-			this->linkLabel1->Location = System::Drawing::Point(0, 0);
-			this->linkLabel1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->linkLabel1->Name = L"linkLabel1";
-			this->linkLabel1->Size = System::Drawing::Size(75, 19);
-			this->linkLabel1->TabIndex = 0;
 			// 
 			// linkReg
 			// 
@@ -296,15 +291,27 @@ namespace LibrarySystem {
 			this->Pb_Exit->TabStop = false;
 			this->Pb_Exit->Click += gcnew System::EventHandler(this, &Login::Pb_Exit_Click);
 			// 
+			// Cbox_ShowPass
+			// 
+			this->Cbox_ShowPass->AutoSize = true;
+			this->Cbox_ShowPass->BackColor = System::Drawing::Color::White;
+			this->Cbox_ShowPass->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->Cbox_ShowPass->Location = System::Drawing::Point(618, 287);
+			this->Cbox_ShowPass->Name = L"Cbox_ShowPass";
+			this->Cbox_ShowPass->Size = System::Drawing::Size(13, 12);
+			this->Cbox_ShowPass->TabIndex = 15;
+			this->Cbox_ShowPass->UseVisualStyleBackColor = false;
+			this->Cbox_ShowPass->CheckedChanged += gcnew System::EventHandler(this, &Login::Cbox_ShowPass_CheckedChanged);
+			// 
 			// Login
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Bisque;
 			this->ClientSize = System::Drawing::Size(688, 417);
+			this->Controls->Add(this->Cbox_ShowPass);
 			this->Controls->Add(this->Pb_Exit);
 			this->Controls->Add(this->linkReg);
-			this->Controls->Add(this->linkLabel1);
 			this->Controls->Add(this->btnContinue);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->Txt_Password);
@@ -333,7 +340,7 @@ namespace LibrarySystem {
 
 
 private: System::Void btnContinue_Click(System::Object^ sender, System::EventArgs^ e) {
-	
+
 	if (Cbox_Module->SelectedItem == nullptr) {
 		MessageBox::Show("Please select a role before continuing.", "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
@@ -343,10 +350,10 @@ private: System::Void btnContinue_Click(System::Object^ sender, System::EventArg
 		MessageBox::Show("Username and password fields cannot be empty.", "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
-
 	String^ studentNumber = Txt_Username->Text;
 	String^ password = Txt_Password->Text;
 	String^ selectedRole = Cbox_Module->SelectedItem->ToString(); // Get selected role from ComboBox
+
 
 	try {
 		connection->Open();
@@ -373,7 +380,8 @@ private: System::Void btnContinue_Click(System::Object^ sender, System::EventArg
 				}
 				else if (userRole == "student") {
 					this->Hide();
-					Student^ min1 = gcnew Student(this);
+					Student^ min1 = gcnew Student(this, studentNumber);
+					min1->DisplayStudentInfo();
 					min1->ShowDialog();	
 					clearFields();
 				}
@@ -414,5 +422,14 @@ private: System::Void Cbox_Module_SelectedIndexChanged(System::Object^ sender, S
 private: System::Void Pb_Exit_Click(System::Object^ sender, System::EventArgs^ e) {
 	Application::Exit();
 }
+private: System::Void Cbox_ShowPass_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (Cbox_ShowPass->Checked == true) {
+		Txt_Password->UseSystemPasswordChar = false; 
+	}
+	else {
+		Txt_Password->UseSystemPasswordChar = true; 
+	}
+}
+
 };
 }

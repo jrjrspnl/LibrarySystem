@@ -2,7 +2,7 @@
 #include "Register.h"
 #include <cliext\utility>
 #using <System.Data.dll>
-
+#include "Student.h"
 
 namespace LibrarySystem {
 
@@ -330,10 +330,10 @@ namespace LibrarySystem {
 			this->btnRegister->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnRegister->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->btnRegister->Location = System::Drawing::Point(76, 338);
+			this->btnRegister->Location = System::Drawing::Point(100, 343);
 			this->btnRegister->Margin = System::Windows::Forms::Padding(2);
 			this->btnRegister->Name = L"btnRegister";
-			this->btnRegister->Size = System::Drawing::Size(210, 36);
+			this->btnRegister->Size = System::Drawing::Size(136, 43);
 			this->btnRegister->TabIndex = 31;
 			this->btnRegister->Text = L"Register";
 			this->btnRegister->UseVisualStyleBackColor = false;
@@ -433,7 +433,6 @@ namespace LibrarySystem {
 			   return false;
 		   }
 	private: System::Void btnRegister_Click(System::Object^ sender, System::EventArgs^ e) {
-
 		if (String::IsNullOrEmpty(Txt_Firstname->Text) ||
 			String::IsNullOrEmpty(Txt_LastName->Text) ||
 			String::IsNullOrEmpty(Txt_StudentNumber->Text) ||
@@ -473,7 +472,7 @@ namespace LibrarySystem {
 			}
 			else {
 				
-				String^ insertData = "INSERT INTO Users (FirstName, LastName, StudentNumber, Birthdate, Password, Date_registered,  role) " +
+				String^ insertData = "INSERT INTO Users (FirstName, LastName, StudentNumber, Birthdate, Password, Date_registered,Role) " +
 					"VALUES (@FirstName, @LastName, @StudentNumber, @Birthdate, @Password, @Date, @Role)";
 				SqlCommand^ insertCommand = gcnew SqlCommand(insertData, connection);
 				insertCommand->Parameters->AddWithValue("@FirstName", Txt_Firstname->Text);

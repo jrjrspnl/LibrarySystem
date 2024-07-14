@@ -2,6 +2,7 @@
 #include "AdminDB.h"
 #include "AdminView.h"
 #include "AdminAdd.h"
+#include "AdminGenre.h"
 
 namespace LibrarySystem {
 
@@ -91,6 +92,9 @@ namespace LibrarySystem {
 	private: System::Windows::Forms::PictureBox^ pictureBox6;
 	private: System::Windows::Forms::Panel^ Panel_Db;
 	private: System::Windows::Forms::PictureBox^ Pb_Exit;
+	private: System::Windows::Forms::Button^ Btn_Genre;
+
+
 
 
 
@@ -114,6 +118,7 @@ namespace LibrarySystem {
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Admin::typeid));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
+			this->Btn_Genre = (gcnew System::Windows::Forms::Button());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->btnAdd = (gcnew System::Windows::Forms::Button());
 			this->panel4 = (gcnew System::Windows::Forms::Panel());
@@ -152,6 +157,7 @@ namespace LibrarySystem {
 			// panel3
 			// 
 			this->panel3->BackColor = System::Drawing::Color::NavajoWhite;
+			this->panel3->Controls->Add(this->Btn_Genre);
 			this->panel3->Controls->Add(this->button5);
 			this->panel3->Controls->Add(this->btnAdd);
 			this->panel3->Controls->Add(this->panel4);
@@ -165,13 +171,35 @@ namespace LibrarySystem {
 			this->panel3->Size = System::Drawing::Size(153, 493);
 			this->panel3->TabIndex = 5;
 			// 
+			// Btn_Genre
+			// 
+			this->Btn_Genre->BackColor = System::Drawing::Color::NavajoWhite;
+			this->Btn_Genre->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->Btn_Genre->FlatAppearance->BorderSize = 0;
+			this->Btn_Genre->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->Btn_Genre->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Btn_Genre->ForeColor = System::Drawing::Color::SaddleBrown;
+			this->Btn_Genre->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Btn_Genre.Image")));
+			this->Btn_Genre->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->Btn_Genre->Location = System::Drawing::Point(-2, 230);
+			this->Btn_Genre->Margin = System::Windows::Forms::Padding(2);
+			this->Btn_Genre->Name = L"Btn_Genre";
+			this->Btn_Genre->Padding = System::Windows::Forms::Padding(11, 0, 8, 0);
+			this->Btn_Genre->Size = System::Drawing::Size(154, 42);
+			this->Btn_Genre->TabIndex = 11;
+			this->Btn_Genre->Text = L"  Add Genre";
+			this->Btn_Genre->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			this->Btn_Genre->UseVisualStyleBackColor = false;
+			this->Btn_Genre->Click += gcnew System::EventHandler(this, &Admin::Btn_Genre_Click);
+			// 
 			// button5
 			// 
 			this->button5->BackColor = System::Drawing::Color::NavajoWhite;
 			this->button5->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->button5->FlatAppearance->BorderSize = 0;
 			this->button5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button5->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->button5->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button5->ForeColor = System::Drawing::Color::SaddleBrown;
 			this->button5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button5.Image")));
@@ -193,18 +221,18 @@ namespace LibrarySystem {
 			this->btnAdd->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->btnAdd->FlatAppearance->BorderSize = 0;
 			this->btnAdd->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnAdd->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnAdd->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnAdd->ForeColor = System::Drawing::Color::SaddleBrown;
 			this->btnAdd->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnAdd.Image")));
 			this->btnAdd->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->btnAdd->Location = System::Drawing::Point(-1, 237);
+			this->btnAdd->Location = System::Drawing::Point(-1, 276);
 			this->btnAdd->Margin = System::Windows::Forms::Padding(2);
 			this->btnAdd->Name = L"btnAdd";
 			this->btnAdd->Padding = System::Windows::Forms::Padding(11, 0, 8, 0);
 			this->btnAdd->Size = System::Drawing::Size(154, 42);
 			this->btnAdd->TabIndex = 8;
-			this->btnAdd->Text = L" Add Book";
+			this->btnAdd->Text = L"  Add Book";
 			this->btnAdd->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->btnAdd->UseVisualStyleBackColor = false;
 			this->btnAdd->Click += gcnew System::EventHandler(this, &Admin::btnAdd_Click);
@@ -239,18 +267,18 @@ namespace LibrarySystem {
 			this->btnView->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->btnView->FlatAppearance->BorderSize = 0;
 			this->btnView->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnView->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnView->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnView->ForeColor = System::Drawing::Color::SaddleBrown;
 			this->btnView->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnView.Image")));
 			this->btnView->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->btnView->Location = System::Drawing::Point(-2, 186);
+			this->btnView->Location = System::Drawing::Point(-2, 179);
 			this->btnView->Margin = System::Windows::Forms::Padding(2);
 			this->btnView->Name = L"btnView";
 			this->btnView->Padding = System::Windows::Forms::Padding(11, 0, 8, 0);
 			this->btnView->Size = System::Drawing::Size(155, 47);
 			this->btnView->TabIndex = 5;
-			this->btnView->Text = L" View Book";
+			this->btnView->Text = L"  View Book";
 			this->btnView->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->btnView->UseVisualStyleBackColor = false;
 			this->btnView->Click += gcnew System::EventHandler(this, &Admin::btnView_Click);
@@ -261,12 +289,12 @@ namespace LibrarySystem {
 			this->btnDashboard->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->btnDashboard->FlatAppearance->BorderSize = 0;
 			this->btnDashboard->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnDashboard->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnDashboard->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnDashboard->ForeColor = System::Drawing::Color::SaddleBrown;
 			this->btnDashboard->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnDashboard.Image")));
 			this->btnDashboard->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->btnDashboard->Location = System::Drawing::Point(-1, 133);
+			this->btnDashboard->Location = System::Drawing::Point(-1, 126);
 			this->btnDashboard->Margin = System::Windows::Forms::Padding(2);
 			this->btnDashboard->Name = L"btnDashboard";
 			this->btnDashboard->Padding = System::Windows::Forms::Padding(15, 8, 8, 8);
@@ -331,7 +359,7 @@ namespace LibrarySystem {
 			// 
 			this->Pb_Exit->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Pb_Exit.BackgroundImage")));
 			this->Pb_Exit->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->Pb_Exit->Location = System::Drawing::Point(620, 7);
+			this->Pb_Exit->Location = System::Drawing::Point(622, 7);
 			this->Pb_Exit->Margin = System::Windows::Forms::Padding(2);
 			this->Pb_Exit->Name = L"Pb_Exit";
 			this->Pb_Exit->Size = System::Drawing::Size(31, 29);
@@ -424,6 +452,14 @@ private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e
 		this->Hide();
 		ad->Show();
 	}
+}
+private: System::Void Btn_Genre_Click(System::Object^ sender, System::EventArgs^ e) {
+	Panel_Db->Controls->Clear();
+	AdminGenre^ Genre = gcnew AdminGenre();
+	Genre->TopLevel = false;
+	this->Panel_Db->Controls->Add(Genre);
+	Genre->Show();
+
 }
 };
 }

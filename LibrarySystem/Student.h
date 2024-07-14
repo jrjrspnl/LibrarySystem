@@ -1,6 +1,7 @@
 #pragma once
 #include "StudentBorrow.h"
 #include "StudentView.h"
+#include "StudentReturn.h"
 
 namespace LibrarySystem {
 
@@ -16,8 +17,17 @@ namespace LibrarySystem {
 	/// </summary>
 	public ref class Student : public System::Windows::Forms::Form
 	{
+		SqlConnection^ connection = gcnew SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\jimwiel\\Documents\\library.mdf;Integrated Security=True;Connect Timeout=30");
 	public:
 		Form^ min;
+	private: System::Windows::Forms::Label^ Lbl_firstname;
+	private: System::Windows::Forms::Label^ Lbl_Studentno;
+	private: System::Windows::Forms::PictureBox^ Pbox_Logout;
+
+	public:
+
+	public:
+		String^ studentNumber;
 		Student(void)
 		{
 			InitializeComponent();
@@ -26,12 +36,50 @@ namespace LibrarySystem {
 			//
 		}
 
-		Student(Form^ min1) {
+		Student(Form^ min1, String^ studentNumber) {
 			min = min1;
 			InitializeComponent();
+			this->studentNumber = studentNumber;
 			//
 			//TODO: Add the constructor code here
 			//
+		}
+
+		void DisplayStudentInfo() {
+			try {
+				connection->Open();
+
+				String^ selectQuery = "SELECT FirstName, StudentNumber FROM Users WHERE StudentNumber = @StudentNumber";
+				SqlCommand^ command = gcnew SqlCommand(selectQuery, connection);
+				command->Parameters->AddWithValue("@StudentNumber", studentNumber);
+
+				SqlDataReader^ reader = command->ExecuteReader();
+				if (reader->Read()) {
+					String^ firstName = safe_cast<String^>(reader["FirstName"]);
+					String^ studentNumber = safe_cast<String^>(reader["StudentNumber"]);
+					Lbl_firstname->Text = firstName + "!";
+					Lbl_Studentno->Text = studentNumber;
+				}
+				reader->Close();
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error fetching student information: " + ex->Message, "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			finally {
+				connection->Close();
+			}
+		}
+
+		bool checkConnection()
+		{
+			if (connection->State == ConnectionState::Closed)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 	protected:
@@ -45,6 +93,9 @@ namespace LibrarySystem {
 				delete components;
 			}
 		}
+	private:
+		System::ComponentModel::Container^ components;
+
 	private: System::Windows::Forms::Label^ label7;
 	protected:
 	private: System::Windows::Forms::Panel^ panel2;
@@ -68,8 +119,9 @@ namespace LibrarySystem {
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
 	private: System::Windows::Forms::Button^ btnViewBook;
 	private: System::Windows::Forms::Button^ btnBorrow;
-	private: System::Windows::Forms::Button^ btnReturn;
-	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::Button^ Btn_Return;
+
+
 	private: System::Windows::Forms::PictureBox^ Pb_Exit;
 
 
@@ -80,11 +132,11 @@ namespace LibrarySystem {
 
 
 	private:
+
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
-
+		
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -100,12 +152,14 @@ namespace LibrarySystem {
 			this->pictureBox5 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel4 = (gcnew System::Windows::Forms::Panel());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->Lbl_Studentno = (gcnew System::Windows::Forms::Label());
+			this->Lbl_firstname = (gcnew System::Windows::Forms::Label());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->btnViewBook = (gcnew System::Windows::Forms::Button());
 			this->btnBorrow = (gcnew System::Windows::Forms::Button());
-			this->btnReturn = (gcnew System::Windows::Forms::Button());
+			this->Btn_Return = (gcnew System::Windows::Forms::Button());
+			this->Pbox_Logout = (gcnew System::Windows::Forms::PictureBox());
 			this->panel2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Pb_Exit))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
@@ -113,6 +167,7 @@ namespace LibrarySystem {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
 			this->panel4->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Pbox_Logout))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label7
@@ -190,7 +245,8 @@ namespace LibrarySystem {
 			// panel4
 			// 
 			this->panel4->BackColor = System::Drawing::Color::BurlyWood;
-			this->panel4->Controls->Add(this->textBox1);
+			this->panel4->Controls->Add(this->Lbl_Studentno);
+			this->panel4->Controls->Add(this->Lbl_firstname);
 			this->panel4->Controls->Add(this->label8);
 			this->panel4->Location = System::Drawing::Point(-4, 64);
 			this->panel4->Margin = System::Windows::Forms::Padding(2);
@@ -198,15 +254,31 @@ namespace LibrarySystem {
 			this->panel4->Size = System::Drawing::Size(681, 53);
 			this->panel4->TabIndex = 2;
 			// 
-			// textBox1
+			// Lbl_Studentno
 			// 
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->Lbl_Studentno->AutoSize = true;
+			this->Lbl_Studentno->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->textBox1->Location = System::Drawing::Point(194, 13);
-			this->textBox1->Margin = System::Windows::Forms::Padding(2);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(246, 26);
-			this->textBox1->TabIndex = 6;
+			this->Lbl_Studentno->ForeColor = System::Drawing::Color::SaddleBrown;
+			this->Lbl_Studentno->Location = System::Drawing::Point(514, 16);
+			this->Lbl_Studentno->Name = L"Lbl_Studentno";
+			this->Lbl_Studentno->Size = System::Drawing::Size(65, 22);
+			this->Lbl_Studentno->TabIndex = 7;
+			this->Lbl_Studentno->Text = L"label1";
+			this->Lbl_Studentno->Click += gcnew System::EventHandler(this, &Student::Lbl_Studentno_Click);
+			// 
+			// Lbl_firstname
+			// 
+			this->Lbl_firstname->AutoSize = true;
+			this->Lbl_firstname->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Lbl_firstname->ForeColor = System::Drawing::Color::SaddleBrown;
+			this->Lbl_firstname->Location = System::Drawing::Point(184, 16);
+			this->Lbl_firstname->Name = L"Lbl_firstname";
+			this->Lbl_firstname->Size = System::Drawing::Size(65, 22);
+			this->Lbl_firstname->TabIndex = 6;
+			this->Lbl_firstname->Text = L"label1";
+			this->Lbl_firstname->Click += gcnew System::EventHandler(this, &Student::Lbl_firstname_Click);
 			// 
 			// label8
 			// 
@@ -263,19 +335,31 @@ namespace LibrarySystem {
 			this->btnBorrow->UseVisualStyleBackColor = false;
 			this->btnBorrow->Click += gcnew System::EventHandler(this, &Student::btnBorrow_Click);
 			// 
-			// btnReturn
+			// Btn_Return
 			// 
-			this->btnReturn->BackColor = System::Drawing::Color::Linen;
-			this->btnReturn->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->Btn_Return->BackColor = System::Drawing::Color::Linen;
+			this->Btn_Return->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->btnReturn->ForeColor = System::Drawing::Color::SaddleBrown;
-			this->btnReturn->Location = System::Drawing::Point(448, 315);
-			this->btnReturn->Margin = System::Windows::Forms::Padding(2);
-			this->btnReturn->Name = L"btnReturn";
-			this->btnReturn->Size = System::Drawing::Size(169, 39);
-			this->btnReturn->TabIndex = 14;
-			this->btnReturn->Text = L"Return";
-			this->btnReturn->UseVisualStyleBackColor = false;
+			this->Btn_Return->ForeColor = System::Drawing::Color::SaddleBrown;
+			this->Btn_Return->Location = System::Drawing::Point(448, 315);
+			this->Btn_Return->Margin = System::Windows::Forms::Padding(2);
+			this->Btn_Return->Name = L"Btn_Return";
+			this->Btn_Return->Size = System::Drawing::Size(169, 39);
+			this->Btn_Return->TabIndex = 14;
+			this->Btn_Return->Text = L"Return";
+			this->Btn_Return->UseVisualStyleBackColor = false;
+			this->Btn_Return->Click += gcnew System::EventHandler(this, &Student::Btn_Return_Click);
+			// 
+			// Pbox_Logout
+			// 
+			this->Pbox_Logout->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Pbox_Logout.BackgroundImage")));
+			this->Pbox_Logout->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->Pbox_Logout->Location = System::Drawing::Point(4, 362);
+			this->Pbox_Logout->Name = L"Pbox_Logout";
+			this->Pbox_Logout->Size = System::Drawing::Size(36, 28);
+			this->Pbox_Logout->TabIndex = 15;
+			this->Pbox_Logout->TabStop = false;
+			this->Pbox_Logout->Click += gcnew System::EventHandler(this, &Student::Pbox_Logout_Click);
 			// 
 			// Student
 			// 
@@ -283,7 +367,8 @@ namespace LibrarySystem {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Bisque;
 			this->ClientSize = System::Drawing::Size(670, 397);
-			this->Controls->Add(this->btnReturn);
+			this->Controls->Add(this->Pbox_Logout);
+			this->Controls->Add(this->Btn_Return);
 			this->Controls->Add(this->btnBorrow);
 			this->Controls->Add(this->btnViewBook);
 			this->Controls->Add(this->pictureBox2);
@@ -306,14 +391,14 @@ namespace LibrarySystem {
 			this->panel4->ResumeLayout(false);
 			this->panel4->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Pbox_Logout))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-
-	private: System::Void btnBorrow_Click(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void btnBorrow_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Hide();
-		StudentBorrow^ borrow1 = gcnew StudentBorrow(this);
+		StudentBorrow^ borrow1 = gcnew StudentBorrow(this,studentNumber);
 		borrow1->ShowDialog();
 	
 	}
@@ -327,5 +412,21 @@ private: System::Void btnViewBook_Click(System::Object^ sender, System::EventArg
 }
 private: System::Void Student_Load(System::Object^ sender, System::EventArgs^ e) {
 }
+private: System::Void Btn_Return_Click(System::Object^ sender, System::EventArgs^ e) {
+	this->Hide();
+	StudentReturn^ return1 = gcnew StudentReturn(this, studentNumber);
+	return1->ShowDialog();
+}
+private: System::Void Lbl_firstname_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void Lbl_Studentno_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+	private: System::Void Pbox_Logout_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (MessageBox::Show("Are you sure you want to logout?", "Confirmation Message", System::Windows::Forms::MessageBoxButtons::YesNo, System::Windows::Forms::MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+			this->Hide();
+			min->Show();
+		}
+
+	}
 };
 }

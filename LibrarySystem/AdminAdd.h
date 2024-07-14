@@ -2,6 +2,7 @@
 #include <cliext\utility>
 #using <System.Data.dll>
 #include "BooksData.h"
+#include "Genre.h"
 
 namespace LibrarySystem {
 
@@ -23,6 +24,7 @@ namespace LibrarySystem {
 		AdminAdd(void)
 		{
 			InitializeComponent();
+			displayGenre();
 			displayAllBooks();
 			//
 			//TODO: Add the constructor code here
@@ -338,10 +340,6 @@ namespace LibrarySystem {
 			this->Cbox_Genre->Font = (gcnew System::Drawing::Font(L"Arial Rounded MT Bold", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->Cbox_Genre->FormattingEnabled = true;
-			this->Cbox_Genre->Items->AddRange(gcnew cli::array< System::Object^  >(5) {
-				L"Science Fiction", L"Fantasy", L"Mystery", L"Romance",
-					L"Thriller"
-			});
 			this->Cbox_Genre->Location = System::Drawing::Point(119, 39);
 			this->Cbox_Genre->Margin = System::Windows::Forms::Padding(2);
 			this->Cbox_Genre->Name = L"Cbox_Genre";
@@ -419,6 +417,39 @@ namespace LibrarySystem {
 
 		}
 #pragma endregion
+	private: int getID = 0;
+
+	public: void displayGenre() {
+		if (checkConnection())
+		{
+			try
+			{
+				connection->Open();
+
+				System::String^ selectData = "SELECT * FROM Genre";
+
+				SqlCommand^ cmd = gcnew SqlCommand(selectData, connection); {
+
+					SqlDataReader^ reader = cmd->ExecuteReader();
+
+					if (reader->HasRows) {
+					}
+					while (reader->Read()) {
+						Cbox_Genre->Items->Add(reader["genre"]->ToString());
+					}
+				}
+			}
+			catch (Exception^ ex)
+			{
+				MessageBox::Show("Connection Failed: " + ex->Message, "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			finally
+			{
+				connection->Close();
+			}
+		}
+	}
+
 	private: bool emptyFields() {
 		if (Txt_BookID->Text == "" ||
 			Txt_BookTitle->Text == "" ||
@@ -494,8 +525,6 @@ namespace LibrarySystem {
 			}
 		}
 	}
-	private: int getID = 0;
-
 	private: System::Void Table_Books_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 		if (e->RowIndex >= -1) {
 
@@ -514,57 +543,59 @@ namespace LibrarySystem {
 		}
 	}
 
-	private: System::Void Btn_Update_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (emptyFields()) {
-			MessageBox::Show("Empty Fields", "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		else {
-			if (MessageBox::Show("Are you sure you want to update B00K ID: " + Txt_BookID->Text->Trim() + "?", "Confirmation Message", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-				if (checkConnection()) {
-					try {
-						connection->Open();
+private: System::Void Btn_Update_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (emptyFields()) {
+		MessageBox::Show("Empty Fields", "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
+	else {
+		if (MessageBox::Show("Are you sure you want to update B00K ID: " + Txt_BookID->Text->Trim() + "?", "Confirmation Message", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+			if (checkConnection()) {
+				try {
+					connection->Open();
 
-						System::String^ currentStatus = "";
-						System::String^ selectQuery = "SELECT status FROM books WHERE book_id = @bookID";
-						SqlCommand^ selectCmd = gcnew SqlCommand(selectQuery, connection);
-						selectCmd->Parameters->AddWithValue("@bookID", Txt_BookID->Text->Trim());
-						SqlDataReader^ reader = selectCmd->ExecuteReader();
+					// Get the current status if needed (not used in this example)
+					System::String^ currentStatus = "";
+					System::String^ selectQuery = "SELECT status FROM books WHERE book_id = @bookID";
+					SqlCommand^ selectCmd = gcnew SqlCommand(selectQuery, connection);
+					selectCmd->Parameters->AddWithValue("@bookID", Txt_BookID->Text->Trim());
+					SqlDataReader^ reader = selectCmd->ExecuteReader();
 
-						if (reader->Read()) {
-							currentStatus = reader["status"]->ToString();
-						}
-						reader->Close();
-
-						int qty = Convert::ToInt32(Txt_Quantity->Text->ToString()->Trim());
-						System::String^ status = (qty == 0) ? "Not available" : "Available";
-
-						System::String^ updateData = "UPDATE books SET book_id = @bookID, genre = @genre, book_title = @bookTitle, book_author = @bookAuthor, publication_year = @pYear, quantity = @qty, status = @status WHERE id = @id";
-
-						SqlCommand^ updateCmd = gcnew SqlCommand(updateData, connection);
-						updateCmd->Parameters->AddWithValue("@bookID", Txt_BookID->Text->Trim());
-						updateCmd->Parameters->AddWithValue("@genre", Cbox_Genre->SelectedItem->ToString()->Trim());
-						updateCmd->Parameters->AddWithValue("@bookTitle", Txt_BookTitle->Text->Trim());
-						updateCmd->Parameters->AddWithValue("@bookAuthor", Txt_BookAuthor->Text->Trim()); // Corrected parameter name
-						updateCmd->Parameters->AddWithValue("@pYear", Date_Book->Value); // Corrected parameter name
-						updateCmd->Parameters->AddWithValue("@qty", qty);
-						updateCmd->Parameters->AddWithValue("@status", status);
-						updateCmd->Parameters->AddWithValue("@id", getID);
-
-						updateCmd->ExecuteNonQuery();
-						clearFields();
-						displayAllBooks();
-						MessageBox::Show("Updated Successfully!", "Information Message", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					if (reader->Read()) {
+						currentStatus = reader["status"]->ToString();
 					}
-					catch (Exception^ ex) {
-						MessageBox::Show("Connection Failed: " + ex->Message, "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
-					}
-					finally {
-						connection->Close();
-					}
+					reader->Close();
+
+					// Update logic
+					int qty = Convert::ToInt32(Txt_Quantity->Text->ToString()->Trim());
+					System::String^ status = qty > 0 ? "Available" : "Not available"; // Set status based on quantity
+
+					System::String^ updateData = "UPDATE books SET book_id = @bookID, genre = @genre, book_title = @bookTitle, book_author = @bookAuthor, publication_year = @pYear, quantity = @qty, status = @status WHERE id = @id";
+
+					SqlCommand^ updateCmd = gcnew SqlCommand(updateData, connection);
+					updateCmd->Parameters->AddWithValue("@bookID", Txt_BookID->Text->Trim());
+					updateCmd->Parameters->AddWithValue("@genre", Cbox_Genre->SelectedItem->ToString()->Trim());
+					updateCmd->Parameters->AddWithValue("@bookTitle", Txt_BookTitle->Text->Trim());
+					updateCmd->Parameters->AddWithValue("@bookAuthor", Txt_BookAuthor->Text->Trim());
+					updateCmd->Parameters->AddWithValue("@pYear", Date_Book->Value);
+					updateCmd->Parameters->AddWithValue("@qty", qty);
+					updateCmd->Parameters->AddWithValue("@status", status);
+					updateCmd->Parameters->AddWithValue("@id", getID);
+
+					updateCmd->ExecuteNonQuery();
+					clearFields();
+					displayAllBooks();
+					MessageBox::Show("Updated Successfully!", "Information Message", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
+				catch (Exception^ ex) {
+					MessageBox::Show("Connection Failed: " + ex->Message, "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+				finally {
+					connection->Close();
 				}
 			}
 		}
 	}
+}
 		private: System::Void Btn_Clear_Click(System::Object^ sender, System::EventArgs^ e) {
 			clearFields();
 

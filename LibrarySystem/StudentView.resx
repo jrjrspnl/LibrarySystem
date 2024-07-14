@@ -2069,7 +2069,7 @@
         xt/93f8DPSxzmUK6pjMAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="button6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Pb_Exit.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAKNSURBVFhH7VfL
@@ -2090,7 +2090,7 @@
   <data name="button5.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAC9dSURBVHhe7d0L
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAC9dSURBVHhe7d0L
         vB1VfejxAPIWrUVR8FFBEEFaW1sfUHqNSqOB7FmzEza+bW+vHgVyzqx1EsCi1V0fre3VKopanyi3ty3R
         YiHccGZmpwcFsWpqrW8REFFaIbwkAcyDw13r5J+SzFlJzsmZvffMrN/v8/l+4rXX5Oz1mNl7nz17FhAR
         ERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERER
